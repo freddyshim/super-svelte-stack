@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_in         Int?     
+  token_type         String?  
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?  
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  password      String?
+  image         String?
+  accounts      Account[]
+  tokens        Token[]
+  posts         Post[]
+}
+
+model Post {
+  id          Int         @id @default(autoincrement())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  content     String?  
+  authorId    String
+  author      User        @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model Token {
+  id          String      @id @default(cuid())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt      
+  type        TokenType
+  expiresAt   DateTime
+  valid       Boolean     @default(true)
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum TokenType {
+  VERIFICATION
+  RESET
+}
