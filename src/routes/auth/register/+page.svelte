@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { loginWithGoogle } from '../helpers'
+  import { goto } from '$app/navigation'
+  import { loginWithCredentials, loginWithGoogle } from '../helpers'
 
   let error: string
   let name: string
@@ -20,14 +21,18 @@
     })
 
     if (res.ok) {
-      // TODO
+      await loginWithCredentials(email, password, '/auth/verify')
+      await goto('/auth/verify')
     } else {
       error = ((await res.json()) as App.Error).message
     }
   }
 </script>
 
-<div class="flex flex-col justify-center items-center space-y-4 w-full">
+<form
+  on:submit|preventDefault={handleRegister}
+  class="flex flex-col justify-center items-center space-y-4 w-full"
+>
   <h1 class="text-4xl">Register</h1>
   {#if error}
     <div class="w-full bg-red-500 rounded-md p-4 flex">
@@ -39,8 +44,8 @@
       <span class="sr-only">Name</span>
       <input
         bind:value={name}
-        name="email"
-        type="email"
+        name="text"
+        type="name"
         class="rounded-md text-black w-full pl-2"
         placeholder="Full Name"
       />
@@ -67,7 +72,7 @@
     </label>
   </div>
   <button
-    on:click={handleRegister}
+    type="submit"
     class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 rounded-md px-4 py-2 w-full"
   >
     Create Account
@@ -80,7 +85,7 @@
       Have an account? Log In
     </a>
   </div>
-</div>
+</form>
 <div class="w-full separator">OR</div>
 <button
   on:click={loginWithGoogle}

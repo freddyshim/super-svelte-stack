@@ -7,7 +7,10 @@
   let error = $page.url.searchParams.get('error')
 </script>
 
-<div class="flex flex-col justify-center items-center space-y-4 w-full">
+<form
+  on:submit|preventDefault={() => loginWithCredentials(email, password)}
+  class="flex flex-col justify-center items-center space-y-4 w-full"
+>
   <h1 class="text-4xl">Log In</h1>
   {#if error && error === 'CredentialsSignin'}
     <div class="w-full bg-red-500 rounded-md p-4 flex">
@@ -37,7 +40,7 @@
     </label>
   </div>
   <button
-    on:click={() => loginWithCredentials(email, password)}
+    type="submit"
     class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 rounded-md px-4 py-2 w-full"
     >Log In</button
   >
@@ -46,7 +49,7 @@
       href="/auth/register"
       class="text-blue-300 hover:text-blue-400 active:text-blue-500 underline"
     >
-      Register now
+      Register
     </a>
     <a
       href="/auth/reset"
@@ -54,8 +57,14 @@
     >
       Forgot password?
     </a>
+    <a
+      href="/"
+      class="text-blue-300 hover:text-blue-400 active:text-blue-500 underline"
+    >
+      Home
+    </a>
   </div>
-</div>
+</form>
 <div class="w-full separator">OR</div>
 <button
   on:click={loginWithGoogle}

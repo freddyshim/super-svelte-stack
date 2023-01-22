@@ -6,9 +6,7 @@ import mailer, { getVerifyContent } from '$lib/server/mail'
 import { SMTP_EMAIL } from '$env/static/private'
 import { addMinutes } from 'date-fns'
 import db from '$lib/server/prisma'
-
-const SALT_ROUNDS = 10
-const TOKEN_EXPIRES_IN = 20 // in minutes
+import { SALT_ROUNDS, TOKEN_EXPIRES_IN } from '$lib/constants'
 
 interface RequestBody {
   name: string
@@ -75,8 +73,6 @@ export const POST: RequestHandler = async (event) => {
       subject: 'Verify your Email - Super Svelte Stack',
       html: getVerifyContent(token.id),
     })
-
-    console.log(temp)
 
     // send user WITHOUT password
     const { password, ...noPwUser } = user

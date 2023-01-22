@@ -1,10 +1,14 @@
 import { signIn } from '@auth/sveltekit/client'
 
-export const loginWithCredentials = async (email: string, password: string) => {
+export const loginWithCredentials = async (
+  email: string,
+  password: string,
+  callbackUrl: string = '/home'
+) => {
   await signIn('credentials', {
     email,
     password,
-    callbackUrl: '/auth/login',
+    callbackUrl,
   })
 }
 

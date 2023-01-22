@@ -1,7 +1,11 @@
 import { SvelteKitAuth } from '@auth/sveltekit'
 import CredentialsProvider from '@auth/core/providers/credentials'
 import GoogleProvider from '@auth/core/providers/google'
-import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '$env/static/private'
+import {
+  AUTH_SECRET,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+} from '$env/static/private'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { PrismaClient } from '@prisma/client'
 import type { Adapter } from '@auth/core/adapters'
@@ -29,7 +33,7 @@ export const handle = SvelteKitAuth({
         },
         password: { label: 'Password', type: 'password' },
       },
-      authorize: async (credentials, req) => {
+      authorize: async (credentials) => {
         if (!credentials) {
           return null
         }
@@ -46,8 +50,7 @@ export const handle = SvelteKitAuth({
 
           // success
           if (valid) {
-            let { password, ...userNoPass } = user
-            return userNoPass
+            return { ...user, password: null }
           }
         } catch (err) {
           throw new Error('Invalid credentials')
@@ -62,6 +65,16 @@ export const handle = SvelteKitAuth({
       clientSecret: GOOGLE_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    session: async ({ session }) => {
+      const email = session.user?.email as string
+      const user = await prisma.user.findUnique({
+        select: { emailVerified: true },
+        where: { email },
+      })
+      return { ...session, user: { verified: !!user?.emailVerified } }
+    },
+  },
   events: {
     //linkAccount: async ({ user }) => {
     // Verify email used with OAuth providers

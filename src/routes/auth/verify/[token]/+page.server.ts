@@ -1,7 +1,7 @@
 import { TokenType } from '@prisma/client'
 import type { PageServerLoad } from './$types'
 import db from '$lib/server/prisma'
-import { error } from '@sveltejs/kit'
+import { error, redirect } from '@sveltejs/kit'
 
 export const load: PageServerLoad = async ({ params, locals }) => {
   const token = await db.token.findUnique({
@@ -31,8 +31,5 @@ export const load: PageServerLoad = async ({ params, locals }) => {
     where: { id: token.userId },
   })
 
-  return {
-    session: await locals.getSession(),
-    token: params.token,
-  }
+  throw redirect(303, '/home')
 }
