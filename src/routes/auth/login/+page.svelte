@@ -22,8 +22,8 @@
       <span class="sr-only">Email</span>
       <input
         bind:value={email}
-        name="email"
         type="email"
+        autocomplete="email"
         class="rounded-md text-black w-full pl-2"
         placeholder="Email"
       />
@@ -32,8 +32,8 @@
       <span class="sr-only">Password</span>
       <input
         bind:value={password}
-        name="password"
         type="password"
+        autocomplete="current-password"
         class="rounded-md text-black w-full pl-2"
         placeholder="Password"
       />

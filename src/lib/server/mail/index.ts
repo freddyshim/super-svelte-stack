@@ -11,8 +11,17 @@ export const getVerifyContent = (token: string) =>
   `
     <div style="margin: auto; width: 40%; padding: 10px">
       <h2>Email Verification Request</h2>
-      <p>Welcome to Super Svelte Kit! Verify your email by clicking the link below:</p>
+      <p>Welcome to Super Svelte Stack! Verify your email by clicking the link below:</p>
       <h4><a href=${BASE_URL}/auth/verify/${token}>Verify Email Address</a></h4>
+    </div>
+`
+
+export const getResetContent = (token: string) =>
+  `
+    <div style="margin: auto; width: 40%; padding: 10px">
+      <h2>Reset your Password</h2>
+      <p>We hope you are enjoying Super Svelte Stack. Click the link below to reset your password:</p>
+      <h4><a href=${BASE_URL}/auth/reset/${token}>Reset Password</a></h4>
     </div>
 `
 
