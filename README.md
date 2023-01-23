@@ -5,7 +5,7 @@ Full-stack web app framework built upon <b>SvelteKit</b>.
 Other technologies/packages used include:
 
 - TailwindCSS
-- Auth.js
+- Auth.js (includes both Credentials and OAuth providers)
 - Prisma
 - PostgreSQL
 - bcryptjs
@@ -35,9 +35,9 @@ SMTP_SERVER=your-email-server
 SMTP_PORT=your-email-port
 SMTP_USERNAME=your-email-username
 SMTP_PASSWORD=your-email-password
-AWS_ACCESS_KEY_ID=aws-key
-AWS_SECRET_ACCESS_KEY=aws-secret
-AWS_REGION=aws-region
+AWS_ACCESS_KEY_ID=your-aws-key
+AWS_SECRET_ACCESS_KEY=your-aws-secret
+AWS_REGION=your-aws-region
 ```
 
 Now that you have all the required environment variables, begin to initialize the project. This step involves <b>a)</b> installing Node packages, <b>b)</b> creating schema tables in your database and <b>c)</b> creating Prisma types to use in the project.
