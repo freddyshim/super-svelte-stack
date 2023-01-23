@@ -1,38 +1,55 @@
-# create-svelte
+# Super Svelte Stack
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Full-stack web app framework built upon <b>SvelteKit</b>.
 
-## Creating a project
+Other technologies/packages used include:
 
-If you're seeing this, you've probably already done this step. Congrats!
+- TailwindCSS
+- Auth.js
+- Prisma
+- PostgreSQL
+- bcryptjs
+- AWS SES
+- nodemailer
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Setup
 
-# create a new project in my-app
-npm create svelte@latest my-app
+First, clone the repository.
+
+```
+git clone https://github.com/freddyshim/super-svelte-stack
+cd super-svelte-stack
 ```
 
-## Developing
+Once you pulled the latest version, create a `.env` file in the root directory with the following environment variables. Replace ALL of the placeholders with your own values.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+```
+BASE_URL=https://www.example.com
+DATABASE_URL=postgresql://USER:PASSWORD@URL:PORT/DBNAME
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+AUTH_SECRET=your-jwt-secret
+AUTH_TRUST_HOST=true
+SMTP_EMAIL=your-email
+SMTP_SERVER=your-email-server
+SMTP_PORT=your-email-port
+SMTP_USERNAME=your-email-username
+SMTP_PASSWORD=your-email-password
+AWS_ACCESS_KEY_ID=aws-key
+AWS_SECRET_ACCESS_KEY=aws-secret
+AWS_REGION=aws-region
+```
 
-```bash
+Now that you have all the required environment variables, begin to initialize the project. This step involves <b>a)</b> installing Node packages, <b>b)</b> creating schema tables in your database and <b>c)</b> creating Prisma types to use in the project.
+
+```
+npm i
+npx prisma migrate dev --name init
+npx prisma generate
+```
+
+Finally, you are ready to run the development server.
+
+```
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
