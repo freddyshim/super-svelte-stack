@@ -21,10 +21,10 @@ git clone https://github.com/freddyshim/super-svelte-stack
 cd super-svelte-stack
 ```
 
-Once you pulled the latest version, create a `.env` file in the root directory with the following environment variables. Replace ALL of the placeholders with your own values.
+Once you pulled the latest version, create a `.env` file in the root directory with the following environment variables. Make sure to replace the placeholder values with your own.
 
 ```
-BASE_URL=https://www.example.com
+BASE_URL=http://localhost:5173
 DATABASE_URL=postgresql://USER:PASSWORD@URL:PORT/DBNAME
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
