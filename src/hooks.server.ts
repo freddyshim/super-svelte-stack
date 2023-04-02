@@ -75,41 +75,8 @@ export const handle = SvelteKitAuth({
       return { ...session, user: { verified: !!user?.emailVerified } }
     },
   },
-  events: {
-    //linkAccount: async ({ user }) => {
-    // Verify email used with OAuth providers
-    // Make sure you use ONLY trusted OAuth providers
-    //try {
-    //  const linkedUser = await prisma.user.findUniqueOrThrow({
-    //    select: {
-    //      emailVerified: true,
-    //    },
-    //    where: {
-    //      id: user.id,
-    //    },
-    //  })
-    //  if (!linkedUser.emailVerified) {
-    //    await prisma.user.update({
-    //      data: {
-    //        emailVerified: new Date(),
-    //      },
-    //      where: {
-    //        id: user.id,
-    //      },
-    //    })
-    //  }
-    //} catch (err: unknown) {
-    //  // if this code is reached then something went horribly wrong
-    //  // a) user's id should ALWAYS be unique
-    //  // b) user should ALWAYS exist if 'linkAccount' event is triggered
-    //  let msg = ''
-    //  if (typeof err === 'string') {
-    //    msg = err
-    //  } else if (err instanceof Error) {
-    //    msg = err.message
-    //  }
-    //  throw new Error(`Error linking account to user: ${msg}`)
-    //}
-    //},
+  jwt: {
+    secret: AUTH_SECRET,
+    maxAge: 2 * 60 * 60,
   },
 })
